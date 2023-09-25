@@ -44,7 +44,7 @@ const fenomenler = [
   },
   {
     number: 2,
-    profile: "Justin Biber",
+    profile: "Justin Bieber",
     followers: 114165664,
     posts: 31371,
     platform: "Twitter",
@@ -207,7 +207,7 @@ Aşağıdakileri yapmak için fenomenSil'i kullanın:
 ÖRNEK: fenomenSil işlevi fenomenler dizisi ve 0 indeks sayısı ile çağrılırsa, veri kümemizden 'Instagram' kaldırılmış olarak döndürür. */
 
 function fenomenSil(arr, indDelete) {
-  const copyArr = arr;
+  const copyArr = [...arr];
   //for (let i = 0 ; i < arr.length ; i++ ) {
   copyArr.splice(indDelete, 1);
 
@@ -233,7 +233,7 @@ Aşağıdakileri yapmak için fenomenEkle'i kullanın:
 ÖRNEK: fenomenEkle(fenomenler, 6, "Workintech", 10000000, 2022, "Instagram") çağrıldığında dizinin sonuna yukarıdaki nesne en sona eklenerek yeni fenomenler dizisini döndürmelidir. */
 
 function fenomenEkle(arrPast, number, profile, followers, posts, platform) {
-  const currentArr = arrPast;
+  const currentArr = [...arrPast];
   const addObject = {
     number: number,
     profile: profile,
@@ -299,22 +299,22 @@ Not: Gönderi sayısı belli olmayan (NA) hesaba katmayın.
 Örnek: platformaGoreCokGonderiYapanFenomen(fenomenler, 'TikTok') çağrıldığında "charli damelio" dönmelidir
 */
 
-function platformaGoreCokGonderiYapanFenomen(arr, key) {
-  const newArray = [];
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i]["platform"] === key) {
-      newArray.push(arr[i]);
+function platformaGoreCokGonderiYapanFenomen(arrFenomen, key) {
+  let maxProfileName = "";
+  let maxPostNumber = 0;
+
+  for (let i = 0; i < arrFenomen.length; i++) {
+    if (
+      arrFenomen[i].platform === key &&
+      arrFenomen[i].posts !== "NA" &&
+      arrFenomen[i].posts > maxPostNumber
+    ) {
+      maxProfileName = arrFenomen[i].profile;
+      maxPostNumber = arrFenomen[i].posts;
     }
   }
-  return newArray[0][""];
+  return maxProfileName;
 }
-
-//console.log(Math.max(...newArray));
-//for (let i = 0; i < newArray.length; i++) {
-// if (Math.max(...newArray) === arr[i].posts) {
-//   return arr[i].profile;
-// }
-//}
 
 console.log(
   "Tiktok'ta en cok gonderi paylasan fenomen: ",
@@ -338,5 +338,5 @@ module.exports = {
   fenomenEkle,
   enFenomenler,
   fenomenGonderimSayisi,
-  // platformaGoreCokGonderiYapanFenomen,
+  platformaGoreCokGonderiYapanFenomen,
 };
